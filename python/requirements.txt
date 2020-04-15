@@ -1,6 +1,0 @@
-PyQt5==5.14.2
-pyqt5-file-dialogs==1.0.1
-PyQt5-sip==12.7.2
-PyQt5-stubs==5.14.2.0
-PySide2==5.14.2
-shiboken2==5.14.2
