@@ -1,17 +1,18 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from os import path
+from os.path import join
+from PyQt5.QtCore import *
 from settings import Settings
+from style import Style
 
 
-class GameInterface(QMainWindow):
-    """Отрисовка игрового интерфейса"""
-
+class GameInterface(Style):
     def __init__(self):
         super(GameInterface, self).__init__()
         self.setFixedSize(850, 700)
+        self.setWindowIcon(QIcon(join(Settings.dir_logo, 'logo_1.png')))
         self.setWindowTitle("Space Invaders")
-
+        self.setFocusPolicy(Qt.StrongFocus)
         self.game_interface()
 
     def game_interface(self):
@@ -21,21 +22,6 @@ class GameInterface(QMainWindow):
         self.draw_score_text()
         self.center()
 
-    def styles(self):
-        """Стили программы"""
-
-        self.stylesheet = """
-            QLabel{
-                font: Lucida Console;
-                color: #B200FF;
-                font-size: 30px;
-            }
-            """
-
-    def draw_background(self):
-        """Отрисовка заднего фона"""
-
-        self.setStyleSheet("background-color:  #0E0E0E")
 
     def draw_score_text(self):
         """Отрисовка количества очков, набранных за одну игру"""
@@ -50,16 +36,21 @@ class GameInterface(QMainWindow):
 
         self.line_label = QLabel(self)
         self.picture_line = QPixmap(
-            path.join(Settings.dir_interface_graphics, "line.png")
+            join(Settings.dir_interface_graphics, "line.png")
         )
         self.line_label.setPixmap(self.picture_line)
         self.line_label.resize(820, 4)
         self.line_label.move(15, 630)
 
+        self.line_label_2 = QLabel(self)
+
+        self.picture_line_2 = QPixmap(join(Settings.dir_interface_graphics, "line_2.png"))
+        self.line_label_2.setPixmap(self.picture_line_2)
+        self.line_label_2.resize(820, 2)
+        self.line_label_2.move(15, 558)
+
         self.dop_player_label_1 = QLabel(self)
-        self.picture_dop_player = QPixmap(
-            path.join(Settings.dir_player_graphics, "player_2.png")
-        )
+        self.picture_dop_player = QPixmap(join(Settings.dir_player_graphics, "player_2.png"))
         self.dop_player_label_1.setPixmap(self.picture_dop_player)
         self.dop_player_label_1.resize(70, 40)
         self.dop_player_label_1.move(20, 645)
@@ -68,12 +59,3 @@ class GameInterface(QMainWindow):
         self.dop_player_label_2.setPixmap(self.picture_dop_player)
         self.dop_player_label_2.resize(70, 40)
         self.dop_player_label_2.move(95, 645)
-
-    def center(self):
-        """Центрирование экрана"""
-
-        screen = QDesktopWidget().screenGeometry()
-        size = self.geometry()
-        self.move(
-            (screen.width() - size.width()) / 2, (screen.height() - size.height()) / 2
-        )
