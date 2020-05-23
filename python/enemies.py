@@ -134,6 +134,7 @@ class Enemies:
         self.thred.start()
 
     def kill_threads(self):
+        self.thread_dop_enemy.terminate()
         self.thred.terminate()
         for i in range(self.enemies_index):
             self.thread_list_bullets[i].terminate()

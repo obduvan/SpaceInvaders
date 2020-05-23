@@ -3,7 +3,6 @@ from style import Style
 from settings import Settings
 from radio import  MusicWin, MusicLose
 
-
 class QuestionsInterface(QMainWindow):
     def __init__(self, parent, signal, score, result_game):
         super(QuestionsInterface, self).__init__(parent)
