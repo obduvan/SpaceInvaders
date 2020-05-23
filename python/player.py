@@ -6,7 +6,7 @@ from signals import Signals
 import time
 from os import path
 from settings import Settings
-
+from radio import MusicBackground, MusicWin, MusicShoot
 
 class Player:
     """Движение и выстрелы игрока"""
@@ -102,6 +102,7 @@ class BulletPlayerThread(QThread):
         self.player = player_label
         self.signal = signal
         self.stop = True
+        self.music_shoot = MusicShoot()
 
         super(BulletPlayerThread, self).__init__()
 
@@ -116,6 +117,7 @@ class BulletPlayerThread(QThread):
     def run(self):
         """Цикл полета пуль игрока"""
         self.init_bullet()
+        self.music_shoot.start()
         while self.check_wall(self.y):
             self.y -= 1
             time.sleep(0.001)

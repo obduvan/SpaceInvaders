@@ -4,18 +4,8 @@ from PyQt5.QtWidgets import QWidget, QDesktopWidget
 class Style(QWidget):
     def __init__(self):
         super(Style, self).__init__()
-
-        self.center()
         self.styles()
         self.draw_background()
-
-    def center(self):
-        """Центрирование экрана"""
-
-        screen = QDesktopWidget().screenGeometry()
-        size = self.geometry()
-        self.x = (screen.width() - size.width()) / 2
-        self.y = (screen.height() - size.height()) / 2
 
     def draw_background(self):
         """Отрисовка заднего фона"""
@@ -28,7 +18,7 @@ class Style(QWidget):
         self.stylesheet = """
             QLabel{
                 font: Lucida Console;
-                color: #B200FF;
+                color: #AC02E7;
                 font-size: 30px;
             }
             """
@@ -51,7 +41,7 @@ class Style(QWidget):
         self.stylesheet_score = """
             QLabel{
                     font: Lucida Console;
-                    color: #B200FF;
+                    color: #AC02E7;
                     font-size: 47px;
                     font-weight: bold;
             

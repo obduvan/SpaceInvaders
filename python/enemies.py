@@ -214,10 +214,9 @@ class MotionThread(QThread):
                 if i % 10 == 0:
                     ind += 1
                     straight += 1 / 16
-                if i % 40 == 0:
-                    # time.sleep(70 / i + 0.7)
+                if i % self.game_settings.step_time == 0:
                     time.sleep(self.game_settings.time_enemies)
-            if straight == 1:
+            if straight >= self.game_settings.limit_step:
                 straight = 0
                 split_y += 0.7
                 split_x *= -1

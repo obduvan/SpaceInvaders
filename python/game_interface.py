@@ -1,7 +1,9 @@
+from PyQt5.QtMultimedia import QSound, QAudioFormat, QMediaPlaylist, QMediaContent, QMediaPlayer
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from os.path import join
 from PyQt5.QtCore import *
+from PyQt5.uic.properties import QtGui
 from settings import Settings
 from style import Style
 
@@ -15,13 +17,15 @@ class GameInterface(Style):
         self.setFocusPolicy(Qt.StrongFocus)
         self.game_interface()
 
+        # self.a = QSound(join(Settings.dir_music,'vild.wav' )).play()
+
+
+
     def game_interface(self):
         self.styles()
         self.draw_background()
         self.draw_additional_player()
         self.draw_score_text()
-        self.center()
-
 
     def draw_score_text(self):
         """Отрисовка количества очков, набранных за одну игру"""

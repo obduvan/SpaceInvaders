@@ -9,8 +9,10 @@ from signals import Signals
 import subprocess
 from questions import QuestionsInterface
 from os import path
-
 from settings import Settings
+
+
+from radio import MusicBackground, MusicWin, MusicShoot, MusicKill, MusicShootEnem
 
 
 class GameEvents(GameInterface):
@@ -22,9 +24,21 @@ class GameEvents(GameInterface):
     def __init__(self, game_settings):
         super(GameEvents, self).__init__()
         self.kill = 0
+        self.jesus = False
         self.game_settings = game_settings
         self.set_frequency_render()
         self.render_details()
+        self.init_music()
+
+
+    def init_music(self):
+        self.music_back = MusicBackground()
+        self.music_back.start()
+
+        self.music_kill = MusicKill()
+        self.music_win = MusicWin()
+        self.music_shoot = MusicShootEnem()
+
 
     def set_frequency_render(self):
         self.timer = QBasicTimer()
@@ -71,11 +85,13 @@ class GameEvents(GameInterface):
         """
         if not self.stop_game:
             even_key = QKeyEvent.key()
+
             if even_key == Qt.Key_Right:
                 self.traffic_right = True
             if even_key == Qt.Key_Left:
                 self.traffic_left = True
             if even_key == Qt.Key_Space:
+                self.jesus = False
                 if self.player.bullet_flag:
                     self.signal.reverse_bullet_player.emit(True)
                     self.player.bullet_thread.start()
@@ -110,19 +126,22 @@ class GameEvents(GameInterface):
         self.game_event(bullet_en)
 
     def game_event(self, bullet_en):
-        if bullet_en != self.old_bullet_enem and bullet_en and self.kill < 3:
+        if bullet_en != self.old_bullet_enem and bullet_en and self.kill < 3 and not self.jesus:
+            self.jesus = True
             self.old_bullet_enem = bullet_en
             self.player.died_thread()
             self.traffic_right, self.traffic_left = False, False
             self.hide_dop_player(self.kill)
+            self.music_kill.start()
             self.kill += 1
 
-        if self.kill == 2:
+        if self.kill == 3:
             self.kill += 1
             self.menu(False, False)
 
         answer, killed_enemies = self.enemies.registr_bullet_hit_pl(self.player)
         if answer > 0:
+            self.music_shoot.start()
             self.signal.reverse_bullet_player.emit(False)
             self.score += answer
             self.redrawing_score()
@@ -135,13 +154,18 @@ class GameEvents(GameInterface):
             self.enemies.kill_threads()
             self.stop_game = True
             if draw_line:
+                self.music_event()
                 self.redrawind_line()
 
             self.enemies.signal.hide_enemies_signal.emit()
             self.draw_menu(result_game)
 
+    def music_event(self):
+        self.music_back.terminate()
+        self.music_kill.start()
+
     def draw_menu(self, result_game):
-        # time.sleep(1)
+        self.close()
         new_win = QuestionsInterface(self, self.signal, self.score, result_game)
         new_win.show()
 
@@ -153,6 +177,7 @@ class GameEvents(GameInterface):
         self.line_label.move(15, 558)
 
     def redrawind_line(self):
+
         new_piscture = QPixmap(
             path.join(Settings.dir_interface_graphics, "line_3.png"))
         for i in range(9):
@@ -172,5 +197,8 @@ class GameEvents(GameInterface):
 
     def closeEvent(self, event):
         self.close_game()
+
+
+
 
 

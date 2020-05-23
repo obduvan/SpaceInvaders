@@ -18,8 +18,12 @@ class Settings:
     dir_logo = join(dir_graphics, 'logo')
     dir_scripts = join(base_dir, 'python')
     dir_back = join(dir_scripts, 'menu')
+    dir_music = join(base_dir, 'shanson')
+
 
 class Game:
-    def __init__(self, enemies, time):
+    def __init__(self, enemies, time, step_time, limit_step):
         self.enemies = enemies
         self.time_enemies = time
+        self.step_time = step_time
+        self.limit_step = limit_step
