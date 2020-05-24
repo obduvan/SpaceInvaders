@@ -21,7 +21,6 @@ class StartInteraface(Style):
         self.init_interface()
 
     def init_values(self):
-        self.style = Style()
 
         self.time_enemies = None
         self.enemies = None
@@ -34,33 +33,33 @@ class StartInteraface(Style):
 
     def labels(self):
         self.score_label = QLabel('Difficulty level ', self)
-        self.score_label.setStyleSheet(self.style.stylesheet_score)
+        self.score_label.setStyleSheet(self.stylesheet_score)
         self.score_label.move(265, 140)
         self.score_label.resize(500, 60)
 
     def buttons(self):
         self.button_0 = QPushButton('For child', self)
-        self.button_0.setStyleSheet(self.style.stylesheet_addit)
+        self.button_0.setStyleSheet(self.stylesheet_addit)
         self.button_0.clicked.connect(self.start_child)
         self.button_0.move(180, 265)
         self.button_0.setFixedSize(500, 50)
 
 
         self.button_1 = QPushButton('Easy', self)
-        self.button_1.setStyleSheet(self.style.stylesheet_addit)
+        self.button_1.setStyleSheet(self.stylesheet_addit)
         self.button_1.clicked.connect(self.start_easy)
         self.button_1.move(180, 335)
         self.button_1.setFixedSize(500, 50)
 
         self.button_2 = QPushButton('Normal', self)
-        self.button_2.setStyleSheet(self.style.stylesheet_addit)
+        self.button_2.setStyleSheet(self.stylesheet_addit)
         self.button_2.clicked.connect(self.start_normal)
 
         self.button_2.move(180, 405)
         self.button_2.setFixedSize(500, 50)
 
         self.button_3 = QPushButton('No chance', self)
-        self.button_3.setStyleSheet(self.style.stylesheet_addit)
+        self.button_3.setStyleSheet(self.stylesheet_addit)
         self.button_3.clicked.connect(self.start_no_chance)
 
         self.button_3.move(180, 475)

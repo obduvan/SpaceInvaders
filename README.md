@@ -9,8 +9,8 @@ Cоздание игры Space Invaders
 * Python версии не ниже 3.6
 * PyQt5 c модулями из "requirements.txt"
 
-#### Точка входа программы:
-* start.py
+#### Команда для запуска игры:
+* python start.py
 
 #### Управление:
 * Передвижение: стрелки left, right

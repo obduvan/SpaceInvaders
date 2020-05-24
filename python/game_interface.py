@@ -1,9 +1,7 @@
-from PyQt5.QtMultimedia import QSound, QAudioFormat, QMediaPlaylist, QMediaContent, QMediaPlayer
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from os.path import join
 from PyQt5.QtCore import *
-from PyQt5.uic.properties import QtGui
 from settings import Settings
 from style import Style
 
@@ -16,9 +14,6 @@ class GameInterface(Style):
         self.setWindowTitle("Space Invaders")
         self.setFocusPolicy(Qt.StrongFocus)
         self.game_interface()
-
-        # self.a = QSound(join(Settings.dir_music,'vild.wav' )).play()
-
 
 
     def game_interface(self):
@@ -47,7 +42,6 @@ class GameInterface(Style):
         self.line_label.move(15, 630)
 
         self.line_label_2 = QLabel(self)
-
         self.picture_line_2 = QPixmap(join(Settings.dir_interface_graphics, "line_2.png"))
         self.line_label_2.setPixmap(self.picture_line_2)
         self.line_label_2.resize(820, 2)

@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QDesktopWidget
+from PyQt5.QtWidgets import QWidget
 
 
 class Style(QWidget):
@@ -16,7 +16,8 @@ class Style(QWidget):
         """Стили программы"""
 
         self.stylesheet = """
-            QLabel{
+            QLabel
+            {
                 font: Lucida Console;
                 color: #AC02E7;
                 font-size: 30px;
@@ -24,56 +25,56 @@ class Style(QWidget):
             """
 
         self.stylesheet_addit = """
-            QPushButton{
+            QPushButton
+            {
                 font: Gill Sans;
                 color: #191616;
-                font-size: 22px;
-                
+                font-size: 22px;             
                 font-weight: bold;
-                border-radius: 7px;
-                
+                border-radius: 7px;          
             }
+            
             QPushButton:hover { background-color: #C665C7 }
             QPushButton:!hover { background-color: #904891 }
             QPushButton:pressed { background-color: #C665C7 }
             """
 
         self.stylesheet_score = """
-            QLabel{
-                    font: Lucida Console;
-                    color: #AC02E7;
-                    font-size: 47px;
-                    font-weight: bold;
-            
+            QLabel
+            {
+                font: Lucida Console;
+                color: #AC02E7;
+                font-size: 47px;
+                font-weight: bold;       
             }
             """
 
         self.stylesheet_game_over = """
-            QLabel{
+            QLabel
+            {
                 font: Lucida Console;
                 color: #c63232;
                 font-size: 150px;
                 font-weight: bold;
-
             }
             """
 
         self.stylesheet_game_win_1 = """
-           QLabel{
-                   font: Lucida Console;
-                   color: #faa701;
-                   font-size: 80px;
-                   font-weight: bold;
-
+           QLabel
+           {
+               font: Lucida Console;
+               color: #faa701;
+               font-size: 80px;
+               font-weight: bold;
            }
            """
 
         self.stylesheet_game_win_2 = """
-           QLabel{
-                   font: Lucida Console;
-                   color: #dfdcd6;
-                   font-size: 70px;
-                   font-weight: bold;
-
+           QLabel
+           {
+               font: Lucida Console;
+               color: #dfdcd6;
+               font-size: 70px;
+               font-weight: bold;
            }
            """

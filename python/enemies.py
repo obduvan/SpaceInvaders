@@ -12,11 +12,9 @@ class Enemies:
     """Собственно космические захватчики"""
 
     def __init__(self, game_events_window, parent_signal, game_settings):
-        self.active_enemy = []
         self.parent_signal = parent_signal
         self.game_settings = game_settings
         self.game_events = game_events_window
-        self.died_enemies = []
         self.init_details()
         self.start_threads()
 
@@ -53,9 +51,10 @@ class Enemies:
     def start_thread_bullets(self):
         """Создание потоков для пуль"""
 
+        self.bullets = 4
         self.signal.enemy_bullet_signal.connect(self.motion_bullets)
         self.thread_list_bullets = []
-        for i in range(4):
+        for i in range(self.bullets):
             self.thread_list_bullets.append(
                 MotionBullets(
                     self, self.matrix_enemies, self.signal, self.stack_bullets[i], self.died_enemies, self.enemies_index
@@ -105,6 +104,7 @@ class Enemies:
                         self.died_enemies.append(str(enem))
                         enem.hide()
                         count_killed += 1
+
         a = (self.dop_enemy_label.x(), self.dop_enemy_label.y())
         b = (a[0] + 46, a[1] + 38)
         if self.registr_shoot(a, b, a1, b1):
@@ -165,16 +165,15 @@ class Enemies:
         enem = self.matrix_enemies[ind % self.enemies_index][i % 10]
         x = enem.x() + split_x
         y = enem.y() + split_y
-
-        self.matrix_enemies[ind % self.enemies_index][i % 10].move(x, y)
-
-        if str(enem) not in self.died_enemies and y >= 520 and y < 800:
-            self.parent_signal.stop_game_singal.emit(True, False)
+        if str(enem) not in self.died_enemies:
+            self.matrix_enemies[ind % self.enemies_index][i % 10].move(x, y)
+            if 520 <= y < 800:
+                self.parent_signal.stop_game_singal.emit(True, False)
 
     def init_enemies(self):
         """Создание захватчиков"""
 
-        self.enemies_index = int(self.game_settings.enemies / 10)
+        self.enemies_index = max(1, int(self.game_settings.enemies / 10))
         self.died_enemies = []
         self.picture_enemy = QPixmap(
             path.join(Settings.dir_enemies_graphics, "enem_3.png")
@@ -237,7 +236,6 @@ class MotionDopThread(QThread):
         """Цикл, управляющий движением сверху летающего корабля"""
 
         while True:
-
             random_time = random.randrange(10, 15)
             random_y = random.randrange(25, 32)
             time.sleep(random_time)
@@ -258,6 +256,7 @@ class MotionBullets(QThread):
         self.window = window
         self.bullet = bullet
         self.signal = signal
+
         super(MotionBullets, self).__init__()
 
     def registr_bullets(self, y):
@@ -265,11 +264,10 @@ class MotionBullets(QThread):
 
     def run(self):
         """Цикл, управляющий полетом пуль захватчиков"""
-
-        time.sleep(random.randrange(3, 13))
+        time.sleep(random.randrange(3, 8))
 
         while True:
-            ind_1 = random.randrange(0, max(self.enemies_index-1, 1))
+            ind_1 = random.randrange(0, max(self.enemies_index - 1, 1))
             ind_2 = random.randrange(0, 9)
             if str(self.matrix_enemy[ind_1][ind_2]) not in self.died_enemies:
 

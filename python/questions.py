@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QLabel, QPushButton, QMainWindow
 from style import Style
 from settings import Settings
-from radio import  MusicWin, MusicLose
+from radio import MusicWin, MusicLose
 
 class QuestionsInterface(QMainWindow):
     def __init__(self, parent, signal, score, result_game):

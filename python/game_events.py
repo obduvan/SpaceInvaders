@@ -11,7 +11,6 @@ from questions import QuestionsInterface
 from os import path
 from settings import Settings
 
-
 from radio import MusicBackground, MusicWin, MusicShoot, MusicKill, MusicShootEnem
 
 
@@ -56,7 +55,6 @@ class GameEvents(GameInterface):
 
     def init_signals(self):
         self.signal = Signals()
-
         self.signal.closed_signal.connect(self.close_game)
         self.signal.stop_game_singal.connect(self.menu)
         self.signal.restart_signal.connect(self.restart_game)
@@ -85,7 +83,6 @@ class GameEvents(GameInterface):
         """
         if not self.stop_game:
             even_key = QKeyEvent.key()
-
             if even_key == Qt.Key_Right:
                 self.traffic_right = True
             if even_key == Qt.Key_Left:
@@ -100,7 +97,6 @@ class GameEvents(GameInterface):
         """Фиксирование отжатых кнопок, во благо плавности"""
 
         key = event.key()
-
         if key == Qt.Key_Right and not event.isAutoRepeat() and self.traffic_right:
             self.traffic_right = False
         if key == Qt.Key_Left and not event.isAutoRepeat() and self.traffic_left:
@@ -197,8 +193,3 @@ class GameEvents(GameInterface):
 
     def closeEvent(self, event):
         self.close_game()
-
-
-
-
-
