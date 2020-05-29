@@ -27,10 +27,10 @@ class QuestionsInterface(QMainWindow):
     def draw_result_game(self, ):
         if self.result_game:
 
-            self.music_win.start()
+            # self.music_win.start()
             self.label_game_win()
         else:
-            self.music_lose.start()
+            # self.music_lose.start()
             self.label_game_over()
             self.draw_label()
 

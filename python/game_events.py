@@ -27,7 +27,7 @@ class GameEvents(GameInterface):
         self.game_settings = game_settings
         self.set_frequency_render()
         self.render_details()
-        self.init_music()
+        # self.init_music()
 
 
     def init_music(self):
@@ -128,7 +128,7 @@ class GameEvents(GameInterface):
             self.player.died_thread()
             self.traffic_right, self.traffic_left = False, False
             self.hide_dop_player(self.kill)
-            self.music_kill.start()
+            # self.music_kill.start()
             self.kill += 1
 
         if self.kill == 3:
@@ -137,7 +137,7 @@ class GameEvents(GameInterface):
 
         answer, killed_enemies = self.enemies.registr_bullet_hit_pl(self.player)
         if answer > 0:
-            self.music_shoot.start()
+            # self.music_shoot.start()
             self.signal.reverse_bullet_player.emit(False)
             self.score += answer
             self.redrawing_score()
@@ -150,7 +150,7 @@ class GameEvents(GameInterface):
             self.enemies.kill_threads()
             self.stop_game = True
             if draw_line:
-                self.music_event()
+                # self.music_event()
                 self.redrawind_line()
 
             self.enemies.signal.hide_enemies_signal.emit()
@@ -165,24 +165,7 @@ class GameEvents(GameInterface):
         new_win = QuestionsInterface(self, self.signal, self.score, result_game)
         new_win.show()
 
-    def redrawing_score(self):
-        self.score_label.setText('Score: {}'.format(self.score))
 
-    def redraw(self):
-        self.line_label.resize(820, 2)
-        self.line_label.move(15, 558)
-
-    def redrawind_line(self):
-
-        new_piscture = QPixmap(
-            path.join(Settings.dir_interface_graphics, "line_3.png"))
-        for i in range(9):
-            self.line_label_2.setPixmap(new_piscture)
-            QApplication.processEvents()
-            time.sleep(0.1)
-            self.line_label_2.setPixmap(self.picture_line_2)
-            QApplication.processEvents()
-            time.sleep(0.1)
 
     def restart_game(self):
         self.close_game()

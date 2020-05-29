@@ -4,7 +4,8 @@ from os.path import join
 from PyQt5.QtCore import *
 from settings import Settings
 from style import Style
-
+import time
+from os.path import join
 
 class GameInterface(Style):
     def __init__(self):
@@ -57,3 +58,21 @@ class GameInterface(Style):
         self.dop_player_label_2.setPixmap(self.picture_dop_player)
         self.dop_player_label_2.resize(70, 40)
         self.dop_player_label_2.move(95, 645)
+
+    def redrawing_score(self):
+        self.score_label.setText('Score: {}'.format(self.score))
+
+    def redraw(self):
+        self.line_label.resize(820, 2)
+        self.line_label.move(15, 558)
+
+    def redrawind_line(self):
+
+        new_picture = QPixmap(join(Settings.dir_interface_graphics, "line_3.png"))
+        for i in range(9):
+            self.line_label_2.setPixmap(new_picture)
+            QApplication.processEvents()
+            time.sleep(0.1)
+            self.line_label_2.setPixmap(self.picture_line_2)
+            QApplication.processEvents()
+            time.sleep(0.1)

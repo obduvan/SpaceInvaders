@@ -87,7 +87,7 @@ class StartInteraface(Style):
         self.start_game()
 
     def start_no_chance(self):
-        self.time_enemies = 0.09
+        self.time_enemies = 0.01
         self.enemies = 40
         self.step_time = 40
         self.limit_step = 1

@@ -117,7 +117,7 @@ class BulletPlayerThread(QThread):
     def run(self):
         """Цикл полета пуль игрока"""
         self.init_bullet()
-        self.music_shoot.start()
+        # self.music_shoot.start()
         while self.check_wall(self.y):
             self.y -= 1
             time.sleep(0.001)
