@@ -66,7 +66,7 @@ class GameInterface(Style):
         self.line_label.resize(820, 2)
         self.line_label.move(15, 558)
 
-    def redrawind_line(self):
+    def redrawing_line(self):
 
         new_picture = QPixmap(join(Settings.dir_interface_graphics, "line_3.png"))
         for i in range(9):

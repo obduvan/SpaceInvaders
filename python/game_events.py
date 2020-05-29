@@ -14,7 +14,10 @@ from settings import Settings
 from radio import MusicBackground, MusicWin, MusicShoot, MusicKill, MusicShootEnem
 
 
-class GameEvents(GameInterface):
+from event_checker import EventChecker
+
+
+class GameEvents(GameInterface, EventChecker):
     """
     Считывание, проверка событий во время игровой сессии и запуск персонажей
     Здесь еще частичное управление главного игрока,  в будушем уберу отсюда.
@@ -22,8 +25,8 @@ class GameEvents(GameInterface):
 
     def __init__(self, game_settings):
         super(GameEvents, self).__init__()
-        self.kill = 0
         self.jesus = False
+        self.flag = False
         self.game_settings = game_settings
         self.set_frequency_render()
         self.render_details()
@@ -48,7 +51,6 @@ class GameEvents(GameInterface):
         self.player = Player(self)
         self.old_bullet_enem = None
         self.old_bullet_pl = None
-        self.score = 0
 
     def init_enemies(self):
         self.enemies = Enemies(self, self.signal, self.game_settings)
@@ -89,7 +91,7 @@ class GameEvents(GameInterface):
                 self.traffic_left = True
             if even_key == Qt.Key_Space:
                 self.jesus = False
-                if self.player.bullet_flag:
+                if self.player.bullet_flag and not self.flag:
                     self.signal.reverse_bullet_player.emit(True)
                     self.player.bullet_thread.start()
 
@@ -122,36 +124,36 @@ class GameEvents(GameInterface):
         self.game_event(bullet_en)
 
     def game_event(self, bullet_en):
-        if bullet_en != self.old_bullet_enem and bullet_en and self.kill < 3 and not self.jesus:
+        if bullet_en != self.old_bullet_enem and bullet_en and self.lives > 0 and not self.jesus:
             self.jesus = True
             self.old_bullet_enem = bullet_en
             self.player.died_thread()
             self.traffic_right, self.traffic_left = False, False
-            self.hide_dop_player(self.kill)
+            self.hide_dop_player(self.lives)
             # self.music_kill.start()
-            self.kill += 1
+            self.count_lives()
 
-        if self.kill == 3:
-            self.kill += 1
+        if self.stop_game:
             self.menu(False, False)
 
         answer, killed_enemies = self.enemies.registr_bullet_hit_pl(self.player)
         if answer > 0:
             # self.music_shoot.start()
             self.signal.reverse_bullet_player.emit(False)
-            self.score += answer
+
+            self.count_score(answer)
             self.redrawing_score()
 
         if killed_enemies:
             self.menu(False, True)
 
     def menu(self, draw_line, result_game):
-        if not self.stop_game:
+        if not self.flag:
+            self.flag = True
             self.enemies.kill_threads()
-            self.stop_game = True
             if draw_line:
                 # self.music_event()
-                self.redrawind_line()
+                self.redrawing_line()
 
             self.enemies.signal.hide_enemies_signal.emit()
             self.draw_menu(result_game)
@@ -164,8 +166,6 @@ class GameEvents(GameInterface):
         self.close()
         new_win = QuestionsInterface(self, self.signal, self.score, result_game)
         new_win.show()
-
-
 
     def restart_game(self):
         self.close_game()

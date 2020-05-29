@@ -76,21 +76,17 @@ class Enemies:
 
         self.dop_enemy_label.move(self.dop_enemy_label.x() + x, y)
 
-    def registr_shoot(self, a, b, a1, b1):
-        return (b[0] > a1[0] and b[0] < b1[0] and b[1] > a1[1] and b[1] < b1[1]) or (
-                b1[0] > a[0] and b1[0] < b[0] and a1[1] > a[1] and a1[1] < b[1]) or (
-                a[0] > a1[0] and a[0] < b1[0] and a[1] > a1[1] and a[1] < b1[1]) or (
-                b[0] > a1[0] and b[0] < b1[0] and a[1] > a1[1] and a[1] < b1[1])
-
-    def registr_bullet_hit_en(self, player):
-        a = (player.player_label.x() + 10, player.player_label.y() + 10)
-        b = (a[0] + 60, a[1] + 60)
-
+    def enum_bullets(self, a, b):
         for bullet in self.stack_bullets:
             a1 = (bullet.x(), bullet.y())
             b1 = (a1[0] + 5, a1[1] + 22)
-            if self.registr_shoot(a, b, a1, b1):
+            if self.game_events.shot_registration(a, b, a1, b1):
                 return bullet
+
+    def registr_bullet_hit_en(self, target):
+        a = (target.player_label.x() + 10, target.player_label.y() + 10)
+        b = (a[0] + 60, a[1] + 60)
+        return self.enum_bullets(a, b)
 
     def for_in_enemies(self, a1, b1):
         count_killed = 0
@@ -100,18 +96,19 @@ class Enemies:
                 a = (enem.x(), enem.y())
                 b = (a[0] + 46, a[1] + 38)
                 if str(enem) not in self.died_enemies:
-                    if self.registr_shoot(a, b, a1, b1):
+                    if self.game_events.shot_registration(a, b, a1, b1):
                         self.died_enemies.append(str(enem))
                         enem.hide()
                         count_killed += 1
 
         a = (self.dop_enemy_label.x(), self.dop_enemy_label.y())
         b = (a[0] + 46, a[1] + 38)
-        if self.registr_shoot(a, b, a1, b1):
+        if self.game_events.shot_registration(a, b, a1, b1):
             self.dop_enemy_label.hide()
             count_killed += 1
         if len(self.died_enemies) == self.game_settings.enemies:
             killed = True
+
         return count_killed, killed
 
     def registr_bullet_hit_pl(self, player):
@@ -268,7 +265,7 @@ class MotionBullets(QThread):
 
         while True:
             ind_1 = random.randrange(0, max(self.enemies_index - 1, 1))
-            ind_2 = random.randrange(0, 9)
+            ind_2 = random.randrange(0, 10)
             if str(self.matrix_enemy[ind_1][ind_2]) not in self.died_enemies:
 
                 x = self.matrix_enemy[ind_1][ind_2].x() + 27
