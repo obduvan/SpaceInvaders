@@ -1,5 +1,7 @@
 
 from os.path import join
+
+from PyQt5.QtCore import QThread
 from settings import Settings
 
 
