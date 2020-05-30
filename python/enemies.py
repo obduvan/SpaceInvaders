@@ -5,6 +5,7 @@ import time
 from signals import Signals
 from settings import Settings, Game
 import random
+from event_checker import ShotReg
 from os import path
 
 
@@ -53,14 +54,13 @@ class Enemies:
 
         self.bullets = 4
         self.signal.enemy_bullet_signal.connect(self.motion_bullets)
-        self.thread_list_bullets = []
+        self.thread_list_bullets = {}
         for i in range(self.bullets):
-            self.thread_list_bullets.append(
+            self.thread_list_bullets.update({str(self.stack_bullets[i]):
                 MotionBullets(
                     self, self.matrix_enemies, self.signal, self.stack_bullets[i], self.died_enemies, self.enemies_index
-                )
-            )
-            self.thread_list_bullets[i].start()
+                )})
+            self.thread_list_bullets[str(self.stack_bullets[i])].start()
 
     def start_random_enemy_thread(self):
         """Запуск летающего сверху корабля"""
@@ -80,7 +80,7 @@ class Enemies:
         for bullet in self.stack_bullets:
             a1 = (bullet.x(), bullet.y())
             b1 = (a1[0] + 5, a1[1] + 22)
-            if self.game_events.shot_registration(a, b, a1, b1):
+            if ShotReg.shot_registration(a, b, a1, b1):
                 return bullet
 
     def registr_bullet_hit_en(self, target):
@@ -91,19 +91,19 @@ class Enemies:
     def for_in_enemies(self, a1, b1):
         count_killed = 0
         killed = False
-        for enem_list in self.matrix_enemies:
-            for enem in enem_list:
-                a = (enem.x(), enem.y())
+        for enemy_list in self.matrix_enemies:
+            for enemy in enemy_list:
+                a = (enemy.x(), enemy.y())
                 b = (a[0] + 46, a[1] + 38)
-                if str(enem) not in self.died_enemies:
-                    if self.game_events.shot_registration(a, b, a1, b1):
-                        self.died_enemies.append(str(enem))
-                        enem.hide()
+                if str(enemy) not in self.died_enemies:
+                    if ShotReg.shot_registration(a, b, a1, b1):
+                        self.died_enemies.append(str(enemy))
+                        enemy.hide()
                         count_killed += 1
 
         a = (self.dop_enemy_label.x(), self.dop_enemy_label.y())
         b = (a[0] + 46, a[1] + 38)
-        if self.game_events.shot_registration(a, b, a1, b1):
+        if ShotReg.shot_registration(a, b, a1, b1):
             self.dop_enemy_label.hide()
             count_killed += 1
         if len(self.died_enemies) == self.game_settings.enemies:
@@ -134,7 +134,7 @@ class Enemies:
         self.thread_dop_enemy.terminate()
         self.thred.terminate()
         for i in range(self.enemies_index):
-            self.thread_list_bullets[i].terminate()
+            self.thread_list_bullets[str(self.stack_bullets[i])].terminate()
 
     def hide_enemies(self):
         ind = 0
@@ -189,6 +189,12 @@ class Enemies:
             self.matrix_enemies[ind][i % 10].move(x, y)
 
             x += 80
+
+    def hide_bullets(self, bullet):
+        self.thread_list_bullets[str(bullet)].terminate()
+        bullet.hide()
+
+        self.thread_list_bullets[str(bullet)].start()
 
 
 class MotionThread(QThread):

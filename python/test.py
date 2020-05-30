@@ -1,16 +1,12 @@
 import unittest
 
-from PyQt5.uic.properties import QtCore
-from enemies import Enemies
-from start import StartInteraface
-from game_events import GameEvents
-from settings import Game
-from event_checker import EventChecker
+from event_checker import EventChecker, ShotReg
 
 
 class BulletEnemiesTest(unittest.TestCase):
     def setUp(self):
         self.game_ev = EventChecker()
+
 
     def test_shot_registration_True(self):
         coordinates_true = [[(1, 1), (4, 4), (2, 2), (3, 3)],
@@ -24,7 +20,7 @@ class BulletEnemiesTest(unittest.TestCase):
 
         answers = [True] * 8
         for i in range(len(answers)):
-            self.assertEqual(answers[i], self.game_ev.shot_registration(coordinates_true[i][0],
+            self.assertEqual(answers[i], ShotReg.shot_registration(coordinates_true[i][0],
                                                                          coordinates_true[i][1],
                                                                          coordinates_true[i][2],
                                                                          coordinates_true[i][3]))
@@ -42,7 +38,7 @@ class BulletEnemiesTest(unittest.TestCase):
         answers = [False] * 7
 
         for i in range(len(answers)):
-            self.assertEqual(answers[i], self.game_ev.shot_registration(coordinates_false[i][0],
+            self.assertEqual(answers[i], ShotReg.shot_registration(coordinates_false[i][0],
                                                                          coordinates_false[i][1],
                                                                          coordinates_false[i][2],
                                                                          coordinates_false[i][3]))

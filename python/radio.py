@@ -9,7 +9,7 @@ class MusicBackground(QThread):
         super(MusicBackground, self).__init__()
 
     def run(self):
-        playsound(join(Settings.dir_music, 'back_2.mp3'))
+        playsound(join(Settings.dir_music, 'back_3.mp3'))
 
 
 class MusicShootEnem(QThread):
@@ -33,7 +33,7 @@ class MusicShoot(QThread):
         super(MusicShoot, self).__init__()
 
     def run(self):
-        playsound(join(Settings.dir_music, 'blaster.mp3'))
+        playsound(join(Settings.dir_music, 'blaster_2.mp3'))
 
 
 class MusicKill(QThread):

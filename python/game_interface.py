@@ -76,3 +76,9 @@ class GameInterface(Style):
             self.line_label_2.setPixmap(self.picture_line_2)
             QApplication.processEvents()
             time.sleep(0.1)
+
+    def hide_dop_player(self, check):
+        if check % 2 == 1:
+            self.dop_player_label_2.hide()
+        else:
+            self.dop_player_label_1.hide()

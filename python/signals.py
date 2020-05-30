@@ -14,6 +14,10 @@ class Signals(QObject):
     check_live_enem_signal = pyqtSignal(int, int)
     reverse_live_enem_signal = pyqtSignal(bool)
 
+    redraw_defender_signal = pyqtSignal(object, bool)
+
+    defender_player_signal = pyqtSignal(bool)
+    defender_enemy_signal = pyqtSignal(object)
 
     player_on_shoot_draw = pyqtSignal(object)
     player_on_shoot_died = pyqtSignal()

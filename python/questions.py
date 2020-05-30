@@ -83,7 +83,6 @@ class QuestionsInterface(QMainWindow):
         self.close()
 
     def restart_game(self):
-
         self.close_this()
         self.signal.restart_signal.emit()
 

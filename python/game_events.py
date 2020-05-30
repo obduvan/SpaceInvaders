@@ -1,20 +1,17 @@
-import time
+import os
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from PyQt5.QtWidgets import QApplication
 from game_interface import GameInterface
 from enemies import Enemies
 from player import Player, BulletPlayerThread
 from signals import Signals
-import subprocess
 from questions import QuestionsInterface
-from os import path
-from settings import Settings
 
 from radio import MusicBackground, MusicWin, MusicShoot, MusicKill, MusicShootEnem
 
-
 from event_checker import EventChecker
+from defenders import Defenders
 
 
 class GameEvents(GameInterface, EventChecker):
@@ -32,7 +29,6 @@ class GameEvents(GameInterface, EventChecker):
         self.render_details()
         # self.init_music()
 
-
     def init_music(self):
         self.music_back = MusicBackground()
         self.music_back.start()
@@ -40,7 +36,6 @@ class GameEvents(GameInterface, EventChecker):
         self.music_kill = MusicKill()
         self.music_win = MusicWin()
         self.music_shoot = MusicShootEnem()
-
 
     def set_frequency_render(self):
         self.timer = QBasicTimer()
@@ -62,11 +57,15 @@ class GameEvents(GameInterface, EventChecker):
         self.signal.restart_signal.connect(self.restart_game)
         self.signal.reverse_bullet_player.connect(self.player.reverse_bullet)
 
+    def init_defenders(self):
+        self.defenders = Defenders(self, self.player, self.enemies)
+
     def render_details(self):
         self.init_player()
         self.init_signals()
         self.init_enemies()
         self.init_values()
+        self.init_defenders()
 
     def init_values(self):
         self.boomm, self.traffic_left, self.traffic_right = False, False, False
@@ -83,7 +82,7 @@ class GameEvents(GameInterface, EventChecker):
         Фиксирование нажатых кнопокж.
         Запуск потока пуль иг   рока.
         """
-        if not self.stop_game:
+        if not self.stop_game and not self.flag:
             even_key = QKeyEvent.key()
             if even_key == Qt.Key_Right:
                 self.traffic_right = True
@@ -91,7 +90,7 @@ class GameEvents(GameInterface, EventChecker):
                 self.traffic_left = True
             if even_key == Qt.Key_Space:
                 self.jesus = False
-                if self.player.bullet_flag and not self.flag:
+                if self.player.bullet_flag:
                     self.signal.reverse_bullet_player.emit(True)
                     self.player.bullet_thread.start()
 
@@ -103,12 +102,6 @@ class GameEvents(GameInterface, EventChecker):
             self.traffic_right = False
         if key == Qt.Key_Left and not event.isAutoRepeat() and self.traffic_left:
             self.traffic_left = False
-
-    def hide_dop_player(self, check):
-        if check % 2 == 0:
-            self.dop_player_label_2.hide()
-        else:
-            self.dop_player_label_1.hide()
 
     def timerEvent(self, event):
         """Движение главного игрока
@@ -127,6 +120,7 @@ class GameEvents(GameInterface, EventChecker):
         if bullet_en != self.old_bullet_enem and bullet_en and self.lives > 0 and not self.jesus:
             self.jesus = True
             self.old_bullet_enem = bullet_en
+
             self.player.died_thread()
             self.traffic_right, self.traffic_left = False, False
             self.hide_dop_player(self.lives)
@@ -147,14 +141,18 @@ class GameEvents(GameInterface, EventChecker):
         if killed_enemies:
             self.menu(False, True)
 
+    def kill_threads(self):
+        self.defenders.kill_threads()
+        self.enemies.kill_threads()
+
     def menu(self, draw_line, result_game):
         if not self.flag:
             self.flag = True
-            self.enemies.kill_threads()
+            self.kill_threads()
             if draw_line:
                 # self.music_event()
-                self.redrawing_line()
 
+                self.redrawing_line()
             self.enemies.signal.hide_enemies_signal.emit()
             self.draw_menu(result_game)
 
@@ -169,7 +167,7 @@ class GameEvents(GameInterface, EventChecker):
 
     def restart_game(self):
         self.close_game()
-        subprocess.Popen("python " + "start.py", shell=True)
+        os.system("python start.py")
 
     def close_game(self):
         self.close()
