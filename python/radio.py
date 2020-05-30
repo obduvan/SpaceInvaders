@@ -1,9 +1,7 @@
-from PyQt5.QtCore import QThread
-from playsound import playsound
+
 from os.path import join
 from settings import Settings
-import subprocess
-import pyglet
+
 
 import soundfile as sf
 import soundcard as sc
