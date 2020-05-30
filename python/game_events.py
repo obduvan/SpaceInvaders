@@ -27,7 +27,7 @@ class GameEvents(GameInterface, EventChecker):
         self.game_settings = game_settings
         self.set_frequency_render()
         self.render_details()
-        self.init_music()
+        # self.init_music()
 
 
     def init_music(self):
@@ -125,7 +125,7 @@ class GameEvents(GameInterface, EventChecker):
             self.player.died_thread()
             self.traffic_right, self.traffic_left = False, False
             self.hide_dop_player(self.lives)
-            self.music_kill.start()
+            # self.music_kill.start()
             self.count_lives()
 
         if self.stop_game:
@@ -133,7 +133,7 @@ class GameEvents(GameInterface, EventChecker):
 
         answer, killed_enemies = self.enemies.registr_bullet_hit_pl(self.player)
         if answer > 0:
-            self.music_shoot.start()
+            # self.music_shoot.start()
             self.signal.reverse_bullet_player.emit(False)
 
             self.count_score(answer)
@@ -160,7 +160,7 @@ class GameEvents(GameInterface, EventChecker):
 
 
     def draw_menu(self, result_game):
-        self.music_event()
+        # self.music_event()
         self.close()
         new_win = QuestionsInterface(self, self.signal, self.score, result_game)
         new_win.show()

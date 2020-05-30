@@ -21,17 +21,17 @@ class QuestionsInterface(QMainWindow):
         self.setFixedSize(850, 700)
 
     def init_values(self):
-        self.music_win = MusicWin()
-        self.music_lose = MusicLose()
+        # self.music_win = MusicWin()
+        # self.music_lose = MusicLose()
         self.style = Style()
 
     def draw_result_game(self, ):
         if self.result_game:
 
-            self.music_win.start()
+            # self.music_win.start()
             self.label_game_win()
         else:
-            self.music_lose.start()
+            # self.music_lose.start()
             self.label_game_over()
             self.draw_label()
 
