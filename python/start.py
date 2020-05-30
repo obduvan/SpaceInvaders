@@ -17,15 +17,7 @@ class StartInteraface(Style):
         self.setWindowIcon(QIcon(join(Settings.dir_logo, 'logo_1.png')))
         self.setWindowTitle("Space Invaders")
         self.setFocusPolicy(Qt.StrongFocus)
-        self.init_values()
         self.init_interface()
-
-    def init_values(self):
-
-        self.time_enemies = None
-        self.enemies = None
-        self.limit_step = None
-        self.step_time = None
 
     def init_interface(self):
         self.buttons()
@@ -87,7 +79,7 @@ class StartInteraface(Style):
         self.start_game()
 
     def start_no_chance(self):
-        self.time_enemies = 0.01
+        self.time_enemies = 0.08
         self.enemies = 40
         self.step_time = 40
         self.limit_step = 1

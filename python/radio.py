@@ -2,14 +2,23 @@ from PyQt5.QtCore import QThread
 from playsound import playsound
 from os.path import join
 from settings import Settings
+import subprocess
+import pyglet
+
+import soundfile as sf
+import soundcard as sc
+
+
 
 
 class MusicBackground(QThread):
     def __init__(self):
         super(MusicBackground, self).__init__()
-
     def run(self):
-        playsound(join(Settings.dir_music, 'back_3.mp3'))
+        default_speaker = sc.default_speaker()
+        samples, samplerate = sf.read(join(Settings.dir_music, 'back_3.wav'))
+        default_speaker.play(samples, samplerate=samplerate)
+
 
 
 class MusicShootEnem(QThread):
@@ -17,7 +26,10 @@ class MusicShootEnem(QThread):
         super(MusicShootEnem, self).__init__()
 
     def run(self):
-        playsound(join(Settings.dir_music, 'cponk.mp3'))
+        default_speaker = sc.default_speaker()
+        samples, samplerate = sf.read(join(Settings.dir_music, 'cponk.wav'))
+        default_speaker.play(samples, samplerate=samplerate)
+
 
 
 class MusicWin(QThread):
@@ -25,7 +37,10 @@ class MusicWin(QThread):
         super(MusicWin, self).__init__()
 
     def run(self):
-        playsound(join(Settings.dir_music, 'win.mp3'))
+        default_speaker = sc.default_speaker()
+        samples, samplerate = sf.read(join(Settings.dir_music, 'win.wav'))
+        default_speaker.play(samples, samplerate=samplerate)
+
 
 
 class MusicShoot(QThread):
@@ -33,7 +48,10 @@ class MusicShoot(QThread):
         super(MusicShoot, self).__init__()
 
     def run(self):
-        playsound(join(Settings.dir_music, 'blaster_2.mp3'))
+        default_speaker = sc.default_speaker()
+        samples, samplerate = sf.read(join(Settings.dir_music, 'blaster_2.wav'))
+        default_speaker.play(samples, samplerate=samplerate)
+
 
 
 class MusicKill(QThread):
@@ -41,7 +59,10 @@ class MusicKill(QThread):
         super(MusicKill, self).__init__()
 
     def run(self):
-        playsound(join(Settings.dir_music, 'kill.mp3'))
+        default_speaker = sc.default_speaker()
+        samples, samplerate = sf.read(join(Settings.dir_music, 'kill.wav'))
+        default_speaker.play(samples, samplerate=samplerate)
+
 
 
 class MusicLose(QThread):
@@ -49,4 +70,6 @@ class MusicLose(QThread):
         super(MusicLose, self).__init__()
 
     def run(self):
-        playsound(join(Settings.dir_music, 'lose.mp3'))
+        default_speaker = sc.default_speaker()
+        samples, samplerate = sf.read(join(Settings.dir_music, 'lose.wav'))
+        default_speaker.play(samples, samplerate=samplerate)

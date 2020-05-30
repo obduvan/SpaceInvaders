@@ -3,6 +3,7 @@ from style import Style
 from settings import Settings
 from radio import MusicWin, MusicLose
 
+
 class QuestionsInterface(QMainWindow):
     def __init__(self, parent, signal, score, result_game):
         super(QuestionsInterface, self).__init__(parent)
@@ -27,10 +28,10 @@ class QuestionsInterface(QMainWindow):
     def draw_result_game(self, ):
         if self.result_game:
 
-            # self.music_win.start()
+            self.music_win.start()
             self.label_game_win()
         else:
-            # self.music_lose.start()
+            self.music_lose.start()
             self.label_game_over()
             self.draw_label()
 
@@ -87,7 +88,6 @@ class QuestionsInterface(QMainWindow):
         self.signal.restart_signal.emit()
 
     def close_game(self):
-
         self.close_this()
         self.signal.closed_signal.emit()
 
