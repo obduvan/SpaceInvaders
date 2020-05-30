@@ -151,16 +151,13 @@ class GameEvents(GameInterface, EventChecker):
             self.flag = True
             self.kill_threads()
             if draw_line:
-
-
                 self.redrawing_line()
             self.enemies.signal.hide_enemies_signal.emit()
             self.draw_menu(result_game)
 
     def music_event(self):
-
         self.music_back.terminate()
-        self.music_kill.start()
+
 
     def draw_menu(self, result_game):
         self.music_event()

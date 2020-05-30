@@ -10,7 +10,6 @@ import soundcard as sc
 
 
 
-
 class MusicBackground(QThread):
     def __init__(self):
         super(MusicBackground, self).__init__()
