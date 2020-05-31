@@ -5,10 +5,6 @@ from PyQt5.QtCore import QThread
 from settings import Settings
 
 
-import soundfile as sf
-import soundcard as sc
-
-
 
 class MusicBackground(QThread):
     def __init__(self):
