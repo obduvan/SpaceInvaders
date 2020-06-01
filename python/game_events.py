@@ -145,11 +145,13 @@ class GameEvents(GameInterface, EventChecker):
     def kill_threads(self):
         self.defenders.kill_threads()
         self.enemies.kill_threads()
+        self.player.kill_thread()
 
     def menu(self, draw_line, result_game):
         if not self.flag:
             self.flag = True
             self.kill_threads()
+
             if draw_line:
                 self.redrawing_line()
             self.enemies.signal.hide_enemies_signal.emit()
@@ -158,16 +160,22 @@ class GameEvents(GameInterface, EventChecker):
     def music_event(self):
         self.music_back.terminate()
 
-
     def draw_menu(self, result_game):
-        self.music_event()
+
         self.close()
         new_win = QuestionsInterface(self, self.signal, self.score, result_game)
         new_win.show()
 
     def restart_game(self):
         self.close_game()
-        os.system("python start.py")
+        from platform import system
+        system = system()
+        if system == "Windows":
+            start = "python start.py"
+        else:
+            start = "python3 start.py"
+        os.system(start)
+
 
     def close_game(self):
         self.close()

@@ -1,12 +1,12 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-import time
 from signals import Signals
 from settings import Settings, Game
 import random
+import time
 from event_checker import ShotReg
-from os import path
+from os.path import join
 
 
 class Enemies:
@@ -39,11 +39,8 @@ class Enemies:
         for i in range(4):
             self.stack_bullets.append(QLabel(self.game_events))
             self.stack_bullets[i].setPixmap(
-                QPixmap(
-                    path.join(
-                        Settings.dir_bullets_graphics, "bullet_bad_{0}.png"
-                    ).format(i % 2 + 3)
-                )
+                QPixmap(join(Settings.dir_bullets_graphics, "bullet_bad_{0}.png").format(i % 2 + 3)
+                        )
             )
             self.stack_bullets[i].resize(5, 22)
             self.stack_bullets[i].move(0, 0)
@@ -148,9 +145,8 @@ class Enemies:
     def init_random_enemies(self):
         """Cоздание летающего сверху корабля"""
 
-        self.picture_dop_enemy = QPixmap(
-            path.join(Settings.dir_enemies_graphics, "enem_dop_1.png")
-        )
+        self.picture_dop_enemy = QPixmap(join(Settings.dir_enemies_graphics, "enem_dop_1.png")
+                                         )
         self.dop_enemy_label = QLabel(self.game_events)
         self.dop_enemy_label.setPixmap(self.picture_dop_enemy)
         self.dop_enemy_label.resize(52, 30)
@@ -172,9 +168,8 @@ class Enemies:
 
         self.enemies_index = max(1, int(self.game_settings.enemies / 10))
         self.died_enemies = []
-        self.picture_enemy = QPixmap(
-            path.join(Settings.dir_enemies_graphics, "enem_3.png")
-        )
+        self.picture_enemy = QPixmap(join(Settings.dir_enemies_graphics, "enem_3.png")
+                                     )
         self.matrix_enemies = [[] for i in range(4)]
         x, y = 20, 100
         ind = 0
@@ -241,7 +236,7 @@ class MotionDopThread(QThread):
         while True:
             random_time = random.randrange(10, 15)
             random_y = random.randrange(25, 32)
-            time.sleep(random_time)
+            self.sleep(random_time)
 
             while self.enemy.x() < 850:
                 time.sleep(0.01)
@@ -267,7 +262,7 @@ class MotionBullets(QThread):
 
     def run(self):
         """Цикл, управляющий полетом пуль захватчиков"""
-        time.sleep(random.randrange(3, 8))
+        self.sleep(random.randrange(3, 8))
 
         while True:
             ind_1 = random.randrange(0, max(self.enemies_index - 1, 1))

@@ -1,12 +1,10 @@
 import unittest
-
 from event_checker import EventChecker, ShotReg
 
 
 class BulletEnemiesTest(unittest.TestCase):
     def setUp(self):
         self.game_ev = EventChecker()
-
 
     def test_shot_registration_True(self):
         coordinates_true = [[(1, 1), (4, 4), (2, 2), (3, 3)],
@@ -21,9 +19,9 @@ class BulletEnemiesTest(unittest.TestCase):
         answers = [True] * 8
         for i in range(len(answers)):
             self.assertEqual(answers[i], ShotReg.shot_registration(coordinates_true[i][0],
-                                                                         coordinates_true[i][1],
-                                                                         coordinates_true[i][2],
-                                                                         coordinates_true[i][3]))
+                                                                   coordinates_true[i][1],
+                                                                   coordinates_true[i][2],
+                                                                   coordinates_true[i][3]))
 
         return
 
@@ -34,14 +32,15 @@ class BulletEnemiesTest(unittest.TestCase):
                              [(100, 100), (32, 332), (90, 90), (32, 321)],
                              [(100, 3220), (32, 33322), (90, 90), (312, 321)],
                              [(100, 3220), (32, 3), (9320, 9032), (312, 3221)],
+                             [(0, 3220), (32, 33322), (90, 90), (12, 31)],
                              [(1, 31), (32, 3), (1, 32), (311, 31)]]
-        answers = [False] * 7
+        answers = [False] * 8
 
         for i in range(len(answers)):
             self.assertEqual(answers[i], ShotReg.shot_registration(coordinates_false[i][0],
-                                                                         coordinates_false[i][1],
-                                                                         coordinates_false[i][2],
-                                                                         coordinates_false[i][3]))
+                                                                   coordinates_false[i][1],
+                                                                   coordinates_false[i][2],
+                                                                   coordinates_false[i][3]))
 
     def test_stop_game_lives(self):
         for i in range(3):
