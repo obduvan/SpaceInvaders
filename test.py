@@ -1,5 +1,5 @@
 import unittest
-from event_checker import EventChecker, ShotReg
+from python.event_checker import EventChecker, ShotReg
 
 
 class BulletEnemiesTest(unittest.TestCase):
