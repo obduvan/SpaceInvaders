@@ -40,8 +40,7 @@ class Defenders:
                 defender.setPixmap(picture)
                 defender.resize(35, 35)
                 defender.move(coordinates[i][0] + split_x, coordinates[i][1])
-                self.killed_defenders_state.update({str(defender): ['None', 0, 'None']})
-                # print(self.killed_defenders_state.get(str(defender)))
+                self.killed_defenders_state.update({str(defender): ['None', 0]})
                 self.matrix_defenders.append(defender)
             split_x += 250
 
@@ -109,7 +108,6 @@ class DefendersThread(QThread):
                     b1 = (a1[0] + 5, a1[1] + 22)
                     if ShotReg.shot_registration(a, b, a1, b1):
                         self.checker(bullet_enemies, defender, 'enemies')
-
                 self.check_enemies(a, b, defender)
 
                 a1 = (self.player_bullet_label.x(), self.player_bullet_label.y())

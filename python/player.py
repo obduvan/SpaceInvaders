@@ -1,12 +1,12 @@
-
+import time
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from signals import Signals
-import time
-from os import path
+from os.path import join
 from settings import Settings
 from radio import MusicBackground, MusicWin, MusicShoot
+
 
 class Player:
     """Движение и выстрелы игрока"""
@@ -41,14 +41,16 @@ class Player:
     def died_thread(self):
         self.thread_on_shoot.start()
 
+    def kill_thread(self):
+        self.thread_on_shoot.terminate()
+        self.bullet_thread.terminate()
 
     def draw_player(self):
         """Инициализация, отрисовка корабля игрока"""
 
         self.player_label = QLabel(self.game_events)
-        self.picture_player = QPixmap(
-            path.join(Settings.dir_player_graphics, "player_1.png")
-        )
+        self.picture_player = QPixmap(join(Settings.dir_player_graphics, "player_1.png")
+                                      )
         self.player_label.setPixmap(self.picture_player)
 
         self.player_label.resize(70, 70)
@@ -77,7 +79,7 @@ class Player:
         """Инициализация, начальная отрисовка пуль игрока"""
 
         self.bullet_label = QLabel(self.game_events)
-        self.bullet_picture = QPixmap(path.join(Settings.dir_bullets_graphics, "bullet_3.png"))
+        self.bullet_picture = QPixmap(join(Settings.dir_bullets_graphics, "bullet_3.png"))
         self.bullet_label.resize(5, 22)
         self.bullet_label.setPixmap(self.bullet_picture)
 
@@ -136,12 +138,8 @@ class DrawOnShot(QThread):
         super(DrawOnShot, self).__init__()
 
     def run(self):
-        self.died_label = QPixmap(
-            path.join(Settings.dir_player_graphics, "Died_player.png")
-        )
-        self.died_label_1 = QPixmap(
-            path.join(Settings.dir_player_graphics, "player_died_3.png")
-        )
+        self.died_label = QPixmap(join(Settings.dir_player_graphics, "Died_player.png"))
+        self.died_label_1 = QPixmap(join(Settings.dir_player_graphics, "player_died_3.png"))
         self.player_class.bullet_flag = False
         self.signal.player_on_shoot_draw.emit(self.died_label)
         time.sleep(0.2)

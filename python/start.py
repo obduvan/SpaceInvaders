@@ -36,7 +36,6 @@ class StartInteraface(Style):
         self.button_0.move(180, 265)
         self.button_0.setFixedSize(500, 50)
 
-
         self.button_1 = QPushButton('Easy', self)
         self.button_1.setStyleSheet(self.stylesheet_addit)
         self.button_1.clicked.connect(self.start_easy)
@@ -87,7 +86,7 @@ class StartInteraface(Style):
 
     def start_game(self):
         self.close()
-        window = GameEvents(Game(self.enemies, self.time_enemies,  self.step_time, self.limit_step))
+        window = GameEvents(Game(self.enemies, self.time_enemies, self.step_time, self.limit_step))
         window.show()
 
 

@@ -13,8 +13,8 @@ class Settings:
     dir_player_graphics = join(dir_graphics, "player")  # пака с графикой главного игрока
     dir_defenders = join(dir_graphics, 'defenders')
 
+    dir_scripts = base_dir
     dir_logo = join(dir_graphics, 'logo')
-    dir_scripts = join(base_dir, 'python')
     dir_back = join(dir_scripts, 'menu')
     dir_music = join(base_dir, 'shanson')
 
