@@ -24,9 +24,9 @@ class StartInteraface(Style):
         self.labels()
 
     def labels(self):
-        self.score_label = QLabel('Difficulty level ', self)
+        self.score_label = QLabel('Select difficulty', self)
         self.score_label.setStyleSheet(self.stylesheet_score)
-        self.score_label.move(265, 140)
+        self.score_label.move(250, 140)
         self.score_label.resize(500, 60)
 
     def buttons(self):
