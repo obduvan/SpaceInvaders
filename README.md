@@ -4,9 +4,9 @@
 
 #### Описание:
 Cоздание игры Space Invaders  
-![minipic](https://user-images.githubusercontent.com/35761978/113134606-71cdc000-923a-11eb-9a13-628981d746a8.png)
-![](https://user-images.githubusercontent.com/35761978/113134886-d5f08400-923a-11eb-9f91-8558d679f48f.png)
-![](https://user-images.githubusercontent.com/35761978/113134964-f28cbc00-923a-11eb-94b5-1fac0dfd0d4b.png)
+<img src="https://user-images.githubusercontent.com/35761978/113134606-71cdc000-923a-11eb-9a13-628981d746a8.png" width="400" height="350" />
+<img src="https://user-images.githubusercontent.com/35761978/113136050-52379700-923c-11eb-8284-ef1e4d3f84ff.png" width="400" height="350" />
+<img src="https://user-images.githubusercontent.com/35761978/113136095-5e235900-923c-11eb-84b5-b7717a7dfa7f.png" width="400" height="350" />
 
 #### Требования:
 * Python версии не ниже 3.6
